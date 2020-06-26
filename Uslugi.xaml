@@ -28,7 +28,10 @@
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0">Rodzaj stawki: </Label>
-                <ComboBox Grid.Column="1"></ComboBox>
+                <ComboBox Grid.Column="1">
+                    <ComboBoxItem>Godzinowa</ComboBoxItem>
+                    <ComboBoxItem>Od metra</ComboBoxItem>
+                </ComboBox>
             </Grid>
 
             <Grid>
@@ -37,7 +40,9 @@
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0">Stawka VAT:</Label>
-                <ComboBox Grid.Column="1"></ComboBox>
+                <ComboBox Grid.Column="1" x:Name="vatSelectionCombobox" SelectionChanged="vatSelectionCombobox_SelectionChanged">
+
+                </ComboBox>
             </Grid>
 
             <Grid>
@@ -76,7 +81,7 @@
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0">Kwota Netto:</Label>
-                <TextBlock Grid.Column="1" VerticalAlignment="Center">Test</TextBlock>
+                <TextBlock Grid.Column="1" VerticalAlignment="Center" x:Name="NetDisplay"></TextBlock>
             </Grid>
 
             <Grid>

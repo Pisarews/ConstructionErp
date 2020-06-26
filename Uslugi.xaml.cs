@@ -21,6 +21,9 @@ using System.Xml.Serialization;
 using Newtonsoft.Json;
 using System.IO;
 using DataTable = System.Data.DataTable;
+using DocumentFormat.OpenXml.Bibliography;
+using System.ComponentModel;
+using DocumentFormat.OpenXml.Office.CustomUI;
 
 namespace ConstructionERP
 {
@@ -33,6 +36,7 @@ namespace ConstructionERP
         {
             InitializeComponent();
             servicesComboboxLoader();
+            vatSelectionComboboxLoader();
         }
 
    
@@ -64,6 +68,8 @@ namespace ConstructionERP
             {
                 NetPrice.Text = usl.kwotaJednostkowa.ToString();
             }
+
+            netCalculator(Convert.ToDecimal(NetPrice.Text), 5);
         }
 
         private void UnityPrice_TextChanged(object sender, TextChangedEventArgs e)
@@ -71,6 +77,45 @@ namespace ConstructionERP
             Services changeValue = Services.uslugi.Find(x => (x.idUslugi == int.Parse(serviceSelectionCombobox.SelectedValue.ToString())));
             changeValue.kwotaJednostkowa = Convert.ToDecimal(NetPrice.Text);
             Services.isChanged = true;
+            netCalculator(Convert.ToDecimal(NetPrice.Text), 5);
+        }
+
+        
+        
+ 
+        private void vatSelectionComboboxLoader()
+        {
+             var items = new[] 
+             {
+                new { Text = "0 %", Value = 0M },
+                new { Text = "10 %", Value = 10M },
+                new { Text = "20 %", Value = 20M },
+                new { Text = "30 %", Value = 30M },
+                new { Text = "40 %", Value = 40M },
+             };
+
+            vatSelectionCombobox.DisplayMemberPath = "Text";
+            vatSelectionCombobox.SelectedValuePath = "Value";
+            vatSelectionCombobox.ItemsSource = items;
+
+        }
+
+        private void vatSelectionCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            
+        }
+
+        private decimal netCalculator(decimal unityPrice, decimal quantity)
+        {
+            if ((quantity != null && unityPrice != null))
+            {
+                NetDisplay.Text = (unityPrice * quantity).ToString();
+                return unityPrice * quantity;
+            }
+            else
+            {
+                return 0; 
+            }
         }
     }
 }

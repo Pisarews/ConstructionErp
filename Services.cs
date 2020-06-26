@@ -23,6 +23,8 @@ namespace ConstructionERP
 
         public int idUslugi { get; set; }
 
+        
+
         public bool Equals(Services other)
         {
             if (other == null) return false;
