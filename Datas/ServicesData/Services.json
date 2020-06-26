@@ -1,7 +1,7 @@
 [
   {
     "nazwaUslugi": "Usluga Testowa",
-    "kwotaJednostkowa": 500.00,
+    "kwotaJednostkowa": 550.05,
     "idUslugi": 1
   },
   {
@@ -14,4 +14,5 @@
     "kwotaJednostkowa": 250.00,
     "idUslugi": 3
   }
+
 ]

@@ -19,6 +19,8 @@ using System.Diagnostics;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
+using System.IO;
+using DataTable = System.Data.DataTable;
 
 namespace ConstructionERP
 {
@@ -40,21 +42,39 @@ namespace ConstructionERP
         private void servicesComboboxLoader (string x, string y)
         {
 
-
-            {
+          
+            
                 using MySqlConnection con = new MySqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
-                con.Open();
+                try
+                {
+                    con.Open();
+                } 
+                catch(Exception e)
+                {
+                    Debug.WriteLine(e.Message); 
+                }
+            if (con.State == ConnectionState.Open)
+            {
                 using MySqlDataAdapter sda = new MySqlDataAdapter(x, con);
                 System.Data.DataTable dt = new System.Data.DataTable();
                 sda.Fill(dt);
-
                 serviceSelectionCombobox.ItemsSource = dt.DefaultView;
                 serviceSelectionCombobox.DisplayMemberPath = y;
                 serviceSelectionCombobox.SelectedValuePath = "idUslug";
-
-
                 sda.Dispose();
                 con.Close();
+            } 
+            else 
+            {
+                if (File.Exists(@"C:\Users\pisaq\source\repos\ConstructionERP\Datas\ServicesData\Services.json"))
+                {
+          
+                    DataTable dt = new DataTable(); 
+                    dt = ConvertToDatatable(Services.uslugi);
+                    serviceSelectionCombobox.ItemsSource = dt.DefaultView;
+                    serviceSelectionCombobox.DisplayMemberPath = "nazwaUslug";
+                    serviceSelectionCombobox.SelectedValuePath = "idUslug";
+                }
             }
             
            
@@ -63,21 +83,41 @@ namespace ConstructionERP
 
         private void serviceSelectionCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
+
             // Debug.WriteLine("UWAGA KURWA " + (uslugi.Exists(x => (x.idUslugi == (int) serviceSelectionCombobox.SelectedValue))));
+
             
-            Services usl = Services.uslugi.Find(x => (x.idUslugi == (int)serviceSelectionCombobox.SelectedValue));
+            Services usl = Services.uslugi.Find(x => (x.idUslugi == int.Parse(serviceSelectionCombobox.SelectedValue.ToString())));
             if (usl != null)
             {
+                
                 NetPrice.Text = usl.kwotaJednostkowa.ToString();
             }
         }
 
         private void NetPrice_TextChanged(object sender, TextChangedEventArgs e)
         {
-            Services changeValue = Services.uslugi.Find(x => (x.idUslugi == (int)serviceSelectionCombobox.SelectedValue));
+            Services changeValue = Services.uslugi.Find(x => (x.idUslugi == int.Parse(serviceSelectionCombobox.SelectedValue.ToString())));
             changeValue.kwotaJednostkowa = Convert.ToDecimal(NetPrice.Text);
             Services.isChanged = true;
+        }
+
+        static System.Data.DataTable ConvertToDatatable(List<Services> list)
+        {
+            DataTable dt = new DataTable();
+
+            dt.Columns.Add("nazwaUslug");
+            dt.Columns.Add("idUslug");
+            foreach (var item in list)
+            {
+                var row = dt.NewRow();
+                row["nazwaUslug"] = item.nazwaUslugi;
+                row["idUslug"] = Convert.ToInt32(item.idUslugi);
+                dt.Rows.Add(row);
+                Debug.WriteLine(dt.Rows.Count);
+                Debug.WriteLine(item.idUslugi); 
+            }
+            return dt;
         }
     }
 }
