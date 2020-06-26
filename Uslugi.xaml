@@ -1,0 +1,111 @@
+﻿<Window x:Class="ConstructionERP.Uslugi"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ConstructionERP" xmlns:ControlLib="clr-namespace:ControlLib;assembly=NumericUpDown"
+        mc:Ignorable="d"
+        Title="Uslugi" Height="360" Width="400">
+    <Grid Margin="30">
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">Wybierz Usługę</Label>
+                <ComboBox Grid.Column="1" x:Name="serviceSelectionCombobox" SelectionChanged="serviceSelectionCombobox_SelectionChanged">
+                  
+                </ComboBox>
+            </Grid>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">Rodzaj stawki: </Label>
+                <ComboBox Grid.Column="1"></ComboBox>
+            </Grid>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">Stawka VAT:</Label>
+                <ComboBox Grid.Column="1"></ComboBox>
+            </Grid>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">Ilość Godzin/Metrów:</Label>
+                <ControlLib:NumericUpDown MaxValue="2000" Grid.Column="1" HorizontalAlignment="Left"></ControlLib:NumericUpDown>
+            </Grid>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">Rabat (%):</Label>
+                <ControlLib:NumericUpDown MaxValue="100" Grid.Column="1" HorizontalAlignment="Left"></ControlLib:NumericUpDown>
+            </Grid>
+            
+            <Separator></Separator>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">Kwota Jednostkowa:</Label>
+                <TextBox Grid.Column="1" VerticalAlignment="Center" x:Name="NetPrice" TextChanged="NetPrice_TextChanged">
+                </TextBox>
+            </Grid>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">Kwota Netto:</Label>
+                <TextBlock Grid.Column="1" VerticalAlignment="Center">Test</TextBlock>
+            </Grid>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">Kwota Rabatu:</Label>
+                <TextBlock Grid.Column="1" VerticalAlignment="Center">Test</TextBlock>
+            </Grid>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">Kwota Podatku VAT:</Label>
+                <TextBlock Grid.Column="1" VerticalAlignment="Center">Test</TextBlock>
+            </Grid>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">Kwota Brutto:</Label>
+                <TextBlock Grid.Column="1" VerticalAlignment="Center">Test</TextBlock>
+            </Grid>
+
+        </StackPanel>
+    </Grid>
+</Window>

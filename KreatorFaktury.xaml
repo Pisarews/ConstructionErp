@@ -1,0 +1,122 @@
+﻿<Window x:Class="ConstructionERP.KreatorFaktury"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ConstructionERP"  
+        xmlns:ControlLib="clr-namespace:ControlLib;assembly=NumericUpDown"
+        mc:Ignorable="d"
+        Title="KreatorFaktury" Height="Auto" Width="Auto">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+           
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+    
+      
+        </Grid.RowDefinitions>
+        <StackPanel Margin="20">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Margin="5">Pobierz Dane Istniejącego Klienta</Button>
+                
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" >Podaj Numer Faktury</Label>
+                <ControlLib:NumericUpDown Grid.Column="1" HorizontalAlignment="Left"></ControlLib:NumericUpDown>
+            </Grid>
+            <Grid>
+                <Label>Podaj Datę</Label>
+                <DatePicker Margin="80,0,0,0"></DatePicker>
+            </Grid>
+            <Separator></Separator>
+            <TextBlock>KLIENT</TextBlock>
+            <StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0">Imię i Nazwisko Klienta:</Label>
+                    <TextBox Grid.Column="1" BorderThickness="5"></TextBox>
+                </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0">Nazwa Firmy:</Label>
+                    <TextBox Grid.Column="1" BorderThickness="5"></TextBox>
+                </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0">Adres:</Label>
+                    <TextBox Grid.Column="1" BorderThickness="5"></TextBox>
+                </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0">Kod Pocztowy:</Label>
+                    <TextBox Grid.Column="1" BorderThickness="5"></TextBox>
+                </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0">Kraj:</Label>
+                    <TextBox Grid.Column="1" BorderThickness="5"></TextBox>
+                </Grid>
+                <Separator></Separator>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0">VAT:</Label>
+                    <TextBox Grid.Column="1" BorderThickness="5"></TextBox>
+                </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0">REGON:</Label>
+                    <TextBox Grid.Column="1" BorderThickness="5"></TextBox>
+                </Grid>
+            </StackPanel>
+            <Separator></Separator>
+            <TextBlock>USŁUGI</TextBlock>
+            <Button MaxWidth="200" Click="dodajusluge_Click">Dodaj Usługę</Button>
+            
+            
+            
+            <DataGrid Name="DG1" ItemsSource="{Binding}" AutoGenerateColumns="True" >
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Usługa"  />
+                    <DataGridTextColumn Header="Cena Jednostkowa" />
+                    <DataGridTextColumn Header="% VAT" />
+                    <DataGridTextColumn Header="Ilość" />
+                    <DataGridTextColumn Header="Kwota Netto" />
+                    <DataGridTextColumn Header="Rabat" />
+                    <DataGridTextColumn Header="VAT PLN" />
+                    <DataGridTextColumn Header="Kwota Brutto" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+    </Grid>
+</Window>
