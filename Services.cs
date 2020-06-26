@@ -67,19 +67,8 @@ namespace ConstructionERP
 
         public static void SaveDataServices()
         {
-
                 List<Services> loadServices = JsonSerialization.JsonDeserializer<Services>(@"C:\Users\pisaq\source\repos\ConstructionERP\Datas\ServicesData\Services.json");
-                if (loadServices == null)
-                {
-                    JsonSerialization.JsonSerializer<Services>(@"C:\Users\pisaq\source\repos\ConstructionERP\Datas\ServicesData\Services.json", uslugi);
-                    
-                }
-                else
-                {
-                    
-                    JsonSerialization.JsonSerializer<Services>(@"C:\Users\pisaq\source\repos\ConstructionERP\Datas\ServicesData\Services.json", uslugi);
-                }
-  
+                JsonSerialization.JsonSerializer<Services>(@"C:\Users\pisaq\source\repos\ConstructionERP\Datas\ServicesData\Services.json", uslugi); 
         }
 
         public static System.Data.DataTable ConvertToDatatable(List<Services> list)

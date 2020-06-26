@@ -31,15 +31,13 @@ namespace ConstructionERP
     {
         public Uslugi()
         {
-
             InitializeComponent();
-            servicesComboboxLoader("SELECT * from uslugi;", "usluga");
-            
+            servicesComboboxLoader();
         }
 
    
 
-        private void servicesComboboxLoader (string x, string y)
+        private void servicesComboboxLoader ()
         {
 
             if(Services.uslugi != null)
@@ -52,42 +50,6 @@ namespace ConstructionERP
             {
                 Debug.WriteLine("Services.uslugi DEBUG == null"); 
             }
-          
-            /*
-                using MySqlConnection con = new MySqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
-                try
-                {
-                    con.Open();
-                } 
-                catch(Exception e)
-                {
-                    Debug.WriteLine(e.Message); 
-                }
-            if (con.State == ConnectionState.Open)
-            {
-                using MySqlDataAdapter sda = new MySqlDataAdapter(x, con);
-                System.Data.DataTable dt = new System.Data.DataTable();
-                sda.Fill(dt);
-                serviceSelectionCombobox.ItemsSource = dt.DefaultView;
-                serviceSelectionCombobox.DisplayMemberPath = y;
-                serviceSelectionCombobox.SelectedValuePath = "idUslug";
-                sda.Dispose();
-                con.Close();
-            } 
-            else 
-            {
-                if (File.Exists(@"C:\Users\pisaq\source\repos\ConstructionERP\Datas\ServicesData\Services.json"))
-                {
-          
-                    DataTable dt = new DataTable(); 
-                    dt = ConvertToDatatable(Services.uslugi);
-                    serviceSelectionCombobox.ItemsSource = dt.DefaultView;
-                    serviceSelectionCombobox.DisplayMemberPath = "nazwaUslug";
-                    serviceSelectionCombobox.SelectedValuePath = "idUslug";
-                }
-            }
-            */
-           
 
         }
 
@@ -104,14 +66,11 @@ namespace ConstructionERP
             }
         }
 
-        private void NetPrice_TextChanged(object sender, TextChangedEventArgs e)
+        private void UnityPrice_TextChanged(object sender, TextChangedEventArgs e)
         {
             Services changeValue = Services.uslugi.Find(x => (x.idUslugi == int.Parse(serviceSelectionCombobox.SelectedValue.ToString())));
             changeValue.kwotaJednostkowa = Convert.ToDecimal(NetPrice.Text);
             Services.isChanged = true;
         }
-
-        
-       
     }
 }

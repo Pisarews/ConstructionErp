@@ -25,7 +25,6 @@ namespace ConstructionERP
     /// </summary>
     public partial class MainWindow : Window
     {
-        readonly MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
        
         public MainWindow()
         {
@@ -36,7 +35,6 @@ namespace ConstructionERP
                 Services.uslugi = JsonLibrary.JsonSerialization.JsonDeserializer<Services>(servicesPath);
                 Debug.WriteLine("Deserializacja miała miejsce...");
                 Debug.WriteLine(Services.uslugi.Count);
-                
             }
             else
             {
@@ -49,6 +47,7 @@ namespace ConstructionERP
 
         private void btnloaddata_Click(object sender, RoutedEventArgs e)
         {
+            MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
             try
             {
                 conn.Open();
