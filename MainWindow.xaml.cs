@@ -41,8 +41,10 @@ namespace ConstructionERP
             else
             {
                 Services.LoadServicesFromDatabase();
-
             }
+
+            Services.uslugiDT = Services.ConvertToDatatable(Services.uslugi); 
+
         }
 
         private void btnloaddata_Click(object sender, RoutedEventArgs e)

@@ -42,8 +42,18 @@ namespace ConstructionERP
         private void servicesComboboxLoader (string x, string y)
         {
 
+            if(Services.uslugi != null)
+            {
+                serviceSelectionCombobox.ItemsSource = Services.uslugiDT.DefaultView;
+                serviceSelectionCombobox.DisplayMemberPath = "nazwaUslug";
+                serviceSelectionCombobox.SelectedValuePath = "idUslug";
+            }
+            else
+            {
+                Debug.WriteLine("Services.uslugi DEBUG == null"); 
+            }
           
-            
+            /*
                 using MySqlConnection con = new MySqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
                 try
                 {
@@ -76,7 +86,7 @@ namespace ConstructionERP
                     serviceSelectionCombobox.SelectedValuePath = "idUslug";
                 }
             }
-            
+            */
            
 
         }
@@ -90,7 +100,6 @@ namespace ConstructionERP
             Services usl = Services.uslugi.Find(x => (x.idUslugi == int.Parse(serviceSelectionCombobox.SelectedValue.ToString())));
             if (usl != null)
             {
-                
                 NetPrice.Text = usl.kwotaJednostkowa.ToString();
             }
         }
@@ -102,22 +111,7 @@ namespace ConstructionERP
             Services.isChanged = true;
         }
 
-        static System.Data.DataTable ConvertToDatatable(List<Services> list)
-        {
-            DataTable dt = new DataTable();
-
-            dt.Columns.Add("nazwaUslug");
-            dt.Columns.Add("idUslug");
-            foreach (var item in list)
-            {
-                var row = dt.NewRow();
-                row["nazwaUslug"] = item.nazwaUslugi;
-                row["idUslug"] = Convert.ToInt32(item.idUslugi);
-                dt.Rows.Add(row);
-                Debug.WriteLine(dt.Rows.Count);
-                Debug.WriteLine(item.idUslugi); 
-            }
-            return dt;
-        }
+        
+       
     }
 }

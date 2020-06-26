@@ -8,7 +8,8 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 using System.Text;
-using JsonLibrary; 
+using JsonLibrary;
+using System.Data;
 
 namespace ConstructionERP
 {
@@ -31,6 +32,7 @@ namespace ConstructionERP
         public static bool isChanged; 
 
         public static List<Services> uslugi = new List<Services>();
+        public static DataTable uslugiDT = new DataTable(); 
 
 
         public static void LoadServicesFromDatabase()
@@ -57,10 +59,8 @@ namespace ConstructionERP
 
                 }
 
-                reader.Dispose();
-
+                reader.Dispose(); 
                 con.Close();
-                
                 return;
             }
         }
@@ -80,6 +80,24 @@ namespace ConstructionERP
                     JsonSerialization.JsonSerializer<Services>(@"C:\Users\pisaq\source\repos\ConstructionERP\Datas\ServicesData\Services.json", uslugi);
                 }
   
+        }
+
+        public static System.Data.DataTable ConvertToDatatable(List<Services> list)
+        {
+            DataTable dt = new DataTable();
+
+            dt.Columns.Add("nazwaUslug");
+            dt.Columns.Add("idUslug");
+            foreach (var item in list)
+            {
+                var row = dt.NewRow();
+                row["nazwaUslug"] = item.nazwaUslugi;
+                row["idUslug"] = Convert.ToInt32(item.idUslugi);
+                dt.Rows.Add(row);
+                Debug.WriteLine(dt.Rows.Count);
+                Debug.WriteLine(item.idUslugi);
+            }
+            return dt;
         }
 
 
