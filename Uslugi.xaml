@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ConstructionERP" xmlns:ControlLib="clr-namespace:ControlLib;assembly=NumericUpDown"
         mc:Ignorable="d"
-        Title="Uslugi" Height="360" Width="400">
+        Title="Uslugi" Height="420" Width="400">
     <Grid Margin="30">
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
@@ -51,7 +51,7 @@
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0">Ilość Godzin/Metrów:</Label>
-                <ControlLib:NumericUpDown MaxValue="2000" Grid.Column="1" HorizontalAlignment="Left"></ControlLib:NumericUpDown>
+                <ControlLib:NumericUpDown MaxValue="2000" Grid.Column="1" HorizontalAlignment="Left" x:Name="quantitySelector" ValueChanged="quantitySelector_ValueChanged"></ControlLib:NumericUpDown>
             </Grid>
 
             <Grid>
@@ -60,7 +60,7 @@
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0">Rabat (%):</Label>
-                <ControlLib:NumericUpDown MaxValue="100" Grid.Column="1" HorizontalAlignment="Left"></ControlLib:NumericUpDown>
+                <ControlLib:NumericUpDown MaxValue="100" Grid.Column="1" HorizontalAlignment="Left" x:Name="rabatSelector" ValueChanged="rabatSelector_ValueChanged"></ControlLib:NumericUpDown>
             </Grid>
             
             <Separator></Separator>
@@ -89,8 +89,8 @@
                     <ColumnDefinition Width="Auto"></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Label Grid.Column="0">Kwota Rabatu:</Label>
-                <TextBlock Grid.Column="1" VerticalAlignment="Center">Test</TextBlock>
+                <Label Grid.Column="0">Kwota Netto Po Rabacie:</Label>
+                <TextBlock Grid.Column="1" VerticalAlignment="Center" x:Name="netDisplayAfterRabat"></TextBlock>
             </Grid>
 
             <Grid>
@@ -98,8 +98,19 @@
                     <ColumnDefinition Width="Auto"></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">Kwota Rabatu:</Label>
+                <TextBlock Grid.Column="1" VerticalAlignment="Center" x:Name="rabatCost"></TextBlock>
+            </Grid>
+
+         
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
                 <Label Grid.Column="0">Kwota Podatku VAT:</Label>
-                <TextBlock Grid.Column="1" VerticalAlignment="Center">Test</TextBlock>
+                <TextBlock Grid.Column="1" VerticalAlignment="Center" x:Name="vat" >Test</TextBlock>
             </Grid>
 
             <Grid>
@@ -108,8 +119,17 @@
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0">Kwota Brutto:</Label>
-                <TextBlock Grid.Column="1" VerticalAlignment="Center">Test</TextBlock>
+                <TextBlock Grid.Column="1" VerticalAlignment="Center" x:Name="brut"></TextBlock>
             </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" x:Name="SubmitButton" Content="Dodaj" Click="SubmitButton_Click" />
+                <Button Grid.Column="1" x:Name="AnulujButton" Content="Anuluj" />
+            </Grid>
+            
 
         </StackPanel>
     </Grid>

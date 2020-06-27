@@ -39,7 +39,13 @@ namespace ConstructionERP
             vatSelectionComboboxLoader();
         }
 
-   
+        #region Display
+        /* 
+         * 
+         * Tutaj znajdują się generatory wyświetlanych danych oraz obsługa zdarzeń przez użytkownika
+         * Wyświetlanie paneli, ładowanie danych oraz aktualizacja powiązań danych
+         * 
+         */
 
         private void servicesComboboxLoader ()
         {
@@ -69,7 +75,8 @@ namespace ConstructionERP
                 NetPrice.Text = usl.kwotaJednostkowa.ToString();
             }
 
-            netCalculator(Convert.ToDecimal(NetPrice.Text), 5);
+            dataUpdate();
+
         }
 
         private void UnityPrice_TextChanged(object sender, TextChangedEventArgs e)
@@ -77,21 +84,19 @@ namespace ConstructionERP
             Services changeValue = Services.uslugi.Find(x => (x.idUslugi == int.Parse(serviceSelectionCombobox.SelectedValue.ToString())));
             changeValue.kwotaJednostkowa = Convert.ToDecimal(NetPrice.Text);
             Services.isChanged = true;
-            netCalculator(Convert.ToDecimal(NetPrice.Text), 5);
+            dataUpdate(); 
         }
 
-        
-        
- 
+        #region VAT selector + items generator
         private void vatSelectionComboboxLoader()
         {
              var items = new[] 
              {
                 new { Text = "0 %", Value = 0M },
-                new { Text = "10 %", Value = 10M },
-                new { Text = "20 %", Value = 20M },
-                new { Text = "30 %", Value = 30M },
-                new { Text = "40 %", Value = 40M },
+                new { Text = "6 %", Value = 6M },
+                new { Text = "12 %", Value = 12M },
+                new { Text = "21 %", Value = 21M },
+                new { Text = "0 % (AL)*", Value = 0M },
              };
 
             vatSelectionCombobox.DisplayMemberPath = "Text";
@@ -100,13 +105,32 @@ namespace ConstructionERP
 
         }
 
+        #endregion
+
         private void vatSelectionCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
+            dataUpdate();
         }
 
-        private decimal netCalculator(decimal unityPrice, decimal quantity)
+        private void quantitySelector_ValueChanged(object sender, ControlLib.ValueChangedEventArgs e)
         {
+            dataUpdate();
+        }
+
+        private void rabatSelector_ValueChanged(object sender, ControlLib.ValueChangedEventArgs e)
+        {
+            dataUpdate();
+        }
+
+        #endregion
+
+        #region Calculators
+
+        /*Aktualizacja kwot w Formularzu */
+                
+        private decimal netCalculator(decimal unityPrice)
+        {
+            decimal quantity = (decimal) quantitySelector.Value; 
             if ((quantity != null && unityPrice != null))
             {
                 NetDisplay.Text = (unityPrice * quantity).ToString();
@@ -117,5 +141,55 @@ namespace ConstructionERP
                 return 0; 
             }
         }
+
+        private decimal netCalculatorRabat(decimal netPrice, decimal rabat)
+        {
+            if (netPrice != null && rabat != null)
+            {
+                rabat = rabat / 100;
+                netDisplayAfterRabat.Text = (netPrice - netPrice * rabat).ToString();
+                rabatCost.Text = (Convert.ToDecimal(NetDisplay.Text) - (netPrice - (netPrice * rabat))).ToString();
+                return (netPrice - (netPrice * rabat));
+                
+            }
+            else { return 0; }
+        }
+
+        private void vatCalculator()
+        {
+            decimal taxe;
+            taxe = (Convert.ToDecimal(netDisplayAfterRabat.Text) / 100) * Convert.ToDecimal(vatSelectionCombobox.SelectedValue);
+            vat.Text = taxe.ToString();
+            return; 
+        }
+
+        private void brutCalculator()
+        {
+            decimal brutto = Convert.ToDecimal(vat.Text) + Convert.ToDecimal(netDisplayAfterRabat.Text);
+            brut.Text = brutto.ToString(); 
+        }
+
+        private void dataUpdate()
+        {
+            netCalculator(Convert.ToDecimal(NetPrice.Text));
+            netCalculatorRabat(Convert.ToDecimal(NetDisplay.Text), Convert.ToDecimal(rabatSelector.Value));
+            vatCalculator();
+            brutCalculator(); 
+        }
+
+        #endregion
+
+        #region Submit and Verification
+        /*  
+         *  Weryfikacja oraz zatwierdzanie danych przez użytkownika\
+         *  Obsługa zdarzeń oraz wyświetlenie Popup...
+         *  
+         */
+        private void SubmitButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        #endregion
     }
 }

@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <Folder Include="Faktury\" />
+    <Folder Include="TemporaryFiles\" />
   </ItemGroup>
 
   <ItemGroup>
