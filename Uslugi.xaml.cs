@@ -32,11 +32,24 @@ namespace ConstructionERP
     /// </summary>
     public partial class Uslugi : Window
     {
+
+
+        public struct VerificationBool
+        {
+            public bool isVerified { get; set; }
+            public string message { get; set; }
+        }
+     
+        public static VerificationBool serviceSelectionVerif = new VerificationBool();
+        public static VerificationBool vatSelectionVerif = new VerificationBool();
+        public static VerificationBool quantityVerification = new VerificationBool();
+        
         public Uslugi()
         {
             InitializeComponent();
             servicesComboboxLoader();
             vatSelectionComboboxLoader();
+            VerificationGenerator(); 
         }
 
         #region Display
@@ -60,7 +73,7 @@ namespace ConstructionERP
             {
                 Debug.WriteLine("Services.uslugi DEBUG == null"); 
             }
-
+            
         }
 
         private void serviceSelectionCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -76,6 +89,7 @@ namespace ConstructionERP
             }
 
             dataUpdate();
+            serviceSelectionVerif.isVerified = true; 
 
         }
 
@@ -102,7 +116,7 @@ namespace ConstructionERP
             vatSelectionCombobox.DisplayMemberPath = "Text";
             vatSelectionCombobox.SelectedValuePath = "Value";
             vatSelectionCombobox.ItemsSource = items;
-
+            
         }
 
         #endregion
@@ -110,11 +124,13 @@ namespace ConstructionERP
         private void vatSelectionCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             dataUpdate();
+            vatSelectionVerif.isVerified = true;
         }
 
         private void quantitySelector_ValueChanged(object sender, ControlLib.ValueChangedEventArgs e)
         {
             dataUpdate();
+            quantityVerification.isVerified = true; 
         }
 
         private void rabatSelector_ValueChanged(object sender, ControlLib.ValueChangedEventArgs e)
@@ -187,9 +203,47 @@ namespace ConstructionERP
          */
         private void SubmitButton_Click(object sender, RoutedEventArgs e)
         {
-
+            Verify(); 
         }
 
         #endregion
+
+        #region VerificationMethods 
+
+        
+        public static void VerificationGenerator()
+        {
+            /*Obsługę języków...*/
+
+            serviceSelectionVerif.isVerified = false;
+            serviceSelectionVerif.message = "Proszę wybrać usługę.";
+
+            vatSelectionVerif.isVerified = false;
+            vatSelectionVerif.message = "Proszę wybrać stawkę VAT.";
+
+            quantityVerification.isVerified = false;
+            quantityVerification.message = "Ilość nie może być zerowa.";
+        }
+
+        public static void Verify()
+        {
+            var items = new[]
+            {
+                new { item = serviceSelectionVerif },
+                new { item = quantityVerification },
+                new { item = vatSelectionVerif }
+            };
+
+            foreach(var x in items)
+            {
+                if(x.item.isVerified == false)
+                {
+                    Debug.WriteLine(x.item.message);
+                }
+            }
+        }
+
+        #endregion
+
     }
 }
