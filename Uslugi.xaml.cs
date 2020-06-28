@@ -24,6 +24,8 @@ using DataTable = System.Data.DataTable;
 using DocumentFormat.OpenXml.Bibliography;
 using System.ComponentModel;
 using DocumentFormat.OpenXml.Office.CustomUI;
+using Org.BouncyCastle.Asn1.Crmf;
+using DocumentFormat.OpenXml.Office2010.PowerPoint;
 
 namespace ConstructionERP
 {
@@ -38,6 +40,7 @@ namespace ConstructionERP
         {
             public bool isVerified { get; set; }
             public string message { get; set; }
+            public bool infoMessage { get; set; } 
         }
      
         public static VerificationBool serviceSelectionVerif = new VerificationBool();
@@ -125,6 +128,12 @@ namespace ConstructionERP
         {
             dataUpdate();
             vatSelectionVerif.isVerified = true;
+            Debug.WriteLine(vatSelectionCombobox.SelectedValue.ToString()); 
+            if(Convert.ToDecimal(vatSelectionCombobox.SelectedValue) == 0)
+            {
+                vatSelectionVerif.infoMessage = true; 
+                vatSelectionVerif.message = "UWAGA: STAWKA VAT 0% !\n"; 
+            }
         }
 
         private void quantitySelector_ValueChanged(object sender, ControlLib.ValueChangedEventArgs e)
@@ -216,13 +225,16 @@ namespace ConstructionERP
             /*Obsługę języków...*/
 
             serviceSelectionVerif.isVerified = false;
-            serviceSelectionVerif.message = "Proszę wybrać usługę.";
+            serviceSelectionVerif.infoMessage = false; 
+            serviceSelectionVerif.message = "Proszę wybrać usługę.\n";
 
             vatSelectionVerif.isVerified = false;
-            vatSelectionVerif.message = "Proszę wybrać stawkę VAT.";
+            vatSelectionVerif.infoMessage = false;
+            vatSelectionVerif.message = "Proszę wybrać stawkę VAT.\n";
 
             quantityVerification.isVerified = false;
-            quantityVerification.message = "Ilość nie może być zerowa.";
+            quantityVerification.infoMessage = false; 
+            quantityVerification.message = "Ilość nie może być zerowa.\n";
         }
 
         public static void Verify()
@@ -234,12 +246,45 @@ namespace ConstructionERP
                 new { item = vatSelectionVerif }
             };
 
-            foreach(var x in items)
+            bool boxDisplay = false;
+            bool infoBox = false; 
+            string messages = "";
+            foreach (var x in items)
             {
-                if(x.item.isVerified == false)
+
+                if (x.item.isVerified == false)
                 {
-                    Debug.WriteLine(x.item.message);
+                    messages += x.item.message;
+                    boxDisplay = true;
                 }
+                else
+                {
+                    Debug.WriteLine("Brak Błędów weryfikacji");
+                }; 
+                
+                if (x.item.infoMessage == true && messages == "")
+                {
+                    messages += x.item.message;
+                    infoBox = true; 
+                }
+            }
+            if (boxDisplay == true)
+            {
+                MessageBox.Show(messages); 
+            } else if (infoBox == true)
+            {
+                MessageBox.Show(messages);
+            }  
+            
+            if((boxDisplay == false))
+            {
+                string path = @"C:\Users\pisaq\source\repos\ConstructionERP\TemporaryFiles\ServicesTempFile.json";
+                if (!File.Exists(path)) 
+                {
+                    File.Create(path);
+                    
+                    
+                }; 
             }
         }
 
